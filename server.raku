@@ -11,8 +11,6 @@ class Session does Cro::HTTP::Auth {
 
 subset LoggedIn of Session where *.logged-in;
 
-my $PORT = 9999;
-
 my $application = route {
     template-location 'views/';
 
@@ -27,9 +25,8 @@ my $application = route {
     }
 }
 
-my $server = Cro::HTTP::Server.new(
-    :host('localhost'), :port($PORT), :$application
-);
+my $PORT = 9999;
+my $server = Cro::HTTP::Server.new: :port($PORT), :$application;
 
 try {
     $server.start;
